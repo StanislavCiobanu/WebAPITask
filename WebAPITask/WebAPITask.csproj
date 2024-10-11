@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebAPITask.Models\WebAPITask.Models.csproj" />
+    <ProjectReference Include="..\WebAPITask.RequestCounterService\WebAPITask.RequestCounterServices.csproj" />
+    <ProjectReference Include="..\WebAPITask.Services\WebAPITask.Services.csproj" />
+    <ProjectReference Include="..\WebAPITask.TimerService\WebAPITask.TimerService.csproj" />
+  </ItemGroup>
+
+</Project>
