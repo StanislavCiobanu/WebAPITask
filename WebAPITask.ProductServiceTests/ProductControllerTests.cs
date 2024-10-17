@@ -106,7 +106,7 @@ namespace ProductServiceTests
         public void UpdateProductName_WhenIdIsLessThanZero_ShouldReturnConflict()
         {
             // Setup
-            int productId = 1;
+            int productId = -1;
             string name = "New Name -1";
 
             // Act

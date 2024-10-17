@@ -14,7 +14,7 @@
         public List<Module> Modules { get; set; }
         public List<int> Enrollments { get; set; }
 
-        public Course(int id, string title, int createdBy) 
+        public Course(int id, string title, int createdBy)
         {
             Id = id;
             Title = title;
@@ -24,7 +24,7 @@
             CreatedBy = createdBy;
 
             Contributors = new List<int>();
-            Enrollments = new List<int>();  
-        } 
+            Enrollments = new List<int>();
+        }
     }
 }

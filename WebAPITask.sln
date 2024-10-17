@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask", "WebAPITask\We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.Models", "WebAPITask.Models\WebAPITask.Models.csproj", "{99125974-7F63-46DF-942B-B3D3E2BF6D31}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.Services", "WebAPITask.Services\WebAPITask.Services.csproj", "{5032DD77-9F5C-4DD6-AB37-688B4791510B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.CourseService", "WebAPITask.Services\WebAPITask.CourseService.csproj", "{5032DD77-9F5C-4DD6-AB37-688B4791510B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.TimerService", "WebAPITask.TimerService\WebAPITask.TimerService.csproj", "{D49334E1-0E3F-4985-9CF0-4A6AE3BA0DEA}"
 EndProject
@@ -15,7 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.RequestCounterSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.ProductServiceTests", "WebAPITask.ProductServiceTests\WebAPITask.ProductServiceTests.csproj", "{F51C50C6-FD04-49A2-90AB-7E38223EC2EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.DataAccess", "WebAPITask.DataAccess\WebAPITask.DataAccess.csproj", "{0FE83F44-ED66-417D-B425-85C7FA843311}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPITask.Repositories", "WebAPITask.DataAccess\WebAPITask.Repositories.csproj", "{0FE83F44-ED66-417D-B425-85C7FA843311}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIModuleService", "WebAPIModuleService\WebAPIModuleService.csproj", "{D987BDAF-B8B1-4F8F-852D-C0556A8456D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIProductService", "WebAPIProductService\WebAPIProductService.csproj", "{4E1D968D-871F-4E55-8790-17F0161FCBFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIEntity", "WebAPIEntities\WebAPIEntity.csproj", "{646EF64B-BFD1-4C38-AD02-F2750A81C449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +57,18 @@ Global
 		{0FE83F44-ED66-417D-B425-85C7FA843311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FE83F44-ED66-417D-B425-85C7FA843311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FE83F44-ED66-417D-B425-85C7FA843311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D987BDAF-B8B1-4F8F-852D-C0556A8456D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D987BDAF-B8B1-4F8F-852D-C0556A8456D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D987BDAF-B8B1-4F8F-852D-C0556A8456D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D987BDAF-B8B1-4F8F-852D-C0556A8456D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1D968D-871F-4E55-8790-17F0161FCBFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1D968D-871F-4E55-8790-17F0161FCBFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1D968D-871F-4E55-8790-17F0161FCBFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1D968D-871F-4E55-8790-17F0161FCBFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{646EF64B-BFD1-4C38-AD02-F2750A81C449}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646EF64B-BFD1-4C38-AD02-F2750A81C449}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646EF64B-BFD1-4C38-AD02-F2750A81C449}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646EF64B-BFD1-4C38-AD02-F2750A81C449}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

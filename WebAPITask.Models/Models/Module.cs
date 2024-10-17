@@ -11,6 +11,7 @@
         public string Description { get; set; }
         public string Content { get; set; }
         public int Order { get; set; }
+
         public Module(int id, string title, int order, int createdBy)
         {
             Id = id;

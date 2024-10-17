@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -18,9 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebAPITask.DataAccess\WebAPITask.DataAccess.csproj" />
+    <ProjectReference Include="..\WebAPIProductService\WebAPIProductService.csproj" />
+    <ProjectReference Include="..\WebAPITask.DataAccess\WebAPITask.Repositories.csproj" />
     <ProjectReference Include="..\WebAPITask.Models\WebAPITask.Models.csproj" />
-    <ProjectReference Include="..\WebAPITask.Services\WebAPITask.Services.csproj" />
+    <ProjectReference Include="..\WebAPITask.Services\WebAPITask.CourseService.csproj" />
     <ProjectReference Include="..\WebAPITask\WebAPITask.csproj" />
   </ItemGroup>
 

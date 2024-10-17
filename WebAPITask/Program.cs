@@ -1,17 +1,17 @@
 using WebAPITask.Configuration;
 using WebAPITask.DataAccess;
+using WebAPITask.Middleware;
 using WebAPITask.RequestCounterServices;
 using WebAPITask.Services;
 using WebAPITask.TimerService;
 
-var builder = WebApplication.CreateBuilder(args);
+// MediatR
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IAppUsageService, AppUsageService>();
 builder.Services.AddScoped<IRequestCounterService, RequestCounterService>();
 builder.Services.AddSingleton<ICourseRepository, CourseRepository>();
-// Optional Ex 1
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IModuleService, ModuleService>();
 // Optional Ex 2
@@ -22,13 +22,11 @@ builder.Services.Configure<TestDataOptions>(builder.Configuration.GetSection(key
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -41,11 +39,11 @@ app.Use(async (context, next) =>
     app.Services.GetService<IAppUsageService>().IncreaseCount();
     context.RequestServices.GetService<IRequestCounterService>().IncreaseCount();
 
-    // Optional Ex 2
-    app.Logger.LogInformation(app.Services.GetService<ITimerService>().GetCurrentTime().ToString());
-
     await next.Invoke();
 });
+
+// Optional Ex 2
+app.UseTimerServiceMiddleware();
 
 app.UseHttpsRedirection();
 

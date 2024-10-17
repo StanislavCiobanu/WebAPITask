@@ -16,53 +16,38 @@ namespace WebAPITask.DataAccess
 
         public Course GetCourse(int Id)
         {
-            Course course = _courses.Find(c => c.Id == Id);
+            Course course = _courses.Where(c => c.Id == Id).FirstOrDefault();
 
             return course;
         }
+
         public Course GetCourse(string title)
         {
-            Course course = _courses.Find(c => c.Title == title);
+            Course course = _courses.Where(c => c.Title == title).FirstOrDefault();
 
             return course;
         }
 
-        public List<Module> GetModulesById(int courseId)
-        {
-            return _courses.Find(c => c.Id == courseId).Modules;
-        }
-
-        public Module GetModuleById(int courseId, int moduleId)
-        {
-            Course course = _courses.Find(c => c.Id == courseId);
-
-            Module module = course.Modules.Find(m => m.Id == moduleId);
-
-            return module;
-        }
         public Module GetModuleById(int moduleId)
         {
-            Course course = _courses.Find(c => c.Modules.Find(m => m.Id == moduleId) != null);
-
-            Module module = course.Modules.Find(m => m.Id == moduleId);
-
-            return module;
-        }
-        public Module GetModuleByOrder(int courseId, int moduleOrder)
-        {
-            Course course = _courses.Find(c => c.Id == courseId);
-
-            Module module = course.Modules[moduleOrder - 1];
+            var course = _courses.Where(c => c.Modules.Where(m => m.Id == moduleId) != null).FirstOrDefault();
+            var module = course.Modules.Where(m => m.Id == moduleId).FirstOrDefault();
 
             return module;
         }
+
         public Module GetModuleByTitle(string title)
         {
-            Course course = _courses.Find(c => c.Modules.Find(m => m.Title == title) == null);
-
-            Module module = course.Modules.Find(m => m.Title == title);
+            var course = _courses.Where(c => c.Modules.Where(m => m.Title == title) != null).FirstOrDefault();
+            var module = course.Modules.Where(m => m.Title == title).FirstOrDefault();
 
             return module;
         }
+
+        public CourseLimitedData GetCourseLimitedData(int Id)
+        {
+            return new CourseLimitedData(GetCourse(Id));
+        }
+
     }
 }

@@ -7,13 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WebAPIModuleService\WebAPIModuleService.csproj" />
+    <ProjectReference Include="..\WebAPIProductService\WebAPIProductService.csproj" />
     <ProjectReference Include="..\WebAPITask.Models\WebAPITask.Models.csproj" />
     <ProjectReference Include="..\WebAPITask.RequestCounterService\WebAPITask.RequestCounterServices.csproj" />
-    <ProjectReference Include="..\WebAPITask.Services\WebAPITask.Services.csproj" />
+    <ProjectReference Include="..\WebAPITask.Services\WebAPITask.CourseService.csproj" />
     <ProjectReference Include="..\WebAPITask.TimerService\WebAPITask.TimerService.csproj" />
   </ItemGroup>
 

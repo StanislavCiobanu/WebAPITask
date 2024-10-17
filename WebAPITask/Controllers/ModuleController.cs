@@ -11,19 +11,23 @@ namespace WebAPITask.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IModuleService _moduleService;
+        private readonly ICourseService _courseService;
 
-        public ModuleController(ICourseRepository courseRepository,
-            IModuleService moduleService)
+        public ModuleController(/*IModuleRepository moduleRepository,*/ ICourseRepository courseRepository,
+            IModuleService moduleService, ICourseService courseService)
         {
-            _courseRepository = courseRepository;
+            //_moduleRepository = moduleRepository;
             _moduleService = moduleService;
+            _courseService = courseService;
+            _courseRepository = courseRepository;
         }
 
         [HttpPost("CreateModule")]
         public IActionResult CreateModule(int courseId, string moduleTitle, int order)
         {
-            var result = _moduleService.CreateModule(courseId, moduleTitle, order, 1);
-            return StatusCode((int)result);
+            var module = _moduleService.CreateModule(courseId, moduleTitle, order, 1);
+            _courseService.AddModuleToCourse(courseId, module);
+            return Ok("Module was successfully created");
         }
 
         [HttpGet("GetModule")]
@@ -40,6 +44,7 @@ namespace WebAPITask.Controllers
             if (userId == module.CreatedBy)
             {
                 _moduleService.DeleteModule(moduleId);
+                _courseService.RemoveModuleFromCourse(moduleId);
                 return Ok("Module was successfuly deleted");
             }
             else

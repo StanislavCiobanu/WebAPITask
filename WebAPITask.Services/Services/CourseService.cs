@@ -1,6 +1,5 @@
-﻿using WebAPITask.Models;
-using WebAPITask.DataAccess;
-using System.Net;
+﻿using WebAPITask.DataAccess;
+using WebAPITask.Models;
 
 namespace WebAPITask.Services
 {
@@ -13,21 +12,14 @@ namespace WebAPITask.Services
             _courseRepository = courseRepository;
         }
 
-        public HttpStatusCode CreateCourse(string title, int createdBy)
+        public void CreateCourse(string title, int createdBy)
         {
-            var result = ValidateCourseTitle(title);
-
-            if (result == HttpStatusCode.Conflict)
-            {
-                return result;
-            }
+            ValidateCourseTitle(title);
 
             var data = _courseRepository.GetCourses();
 
             Course course = new Course(CountNextCourseId(), title, createdBy);
             _courseRepository.GetCourses().Add(course);
-
-            return HttpStatusCode.Created;
         }
 
         private int CountNextCourseId()
@@ -45,14 +37,12 @@ namespace WebAPITask.Services
             return highestId;
         }
 
-        private HttpStatusCode ValidateCourseTitle(string title)
+        private void ValidateCourseTitle(string title)
         {
             if (_courseRepository.GetCourse(title) != null)
             {
-                return HttpStatusCode.Conflict;
+                throw new Exception("Course with this name allready exists");
             }
-
-            return HttpStatusCode.Continue;
         }
 
         public void DeleteCourse(int courseId)
@@ -65,15 +55,10 @@ namespace WebAPITask.Services
             _courseRepository.GetCourses().Remove(course);
         }
 
-        public HttpStatusCode UpdateCourse(int courseId, string title, string description,
+        public void UpdateCourse(int courseId, string title, string description,
             Discipline discipline, Difficulty difficulty)
         {
-            var result = ValidateCourseTitle(title);
-
-            if (result == HttpStatusCode.Conflict)
-            {
-                return result;
-            }
+            ValidateCourseTitle(title);
 
             Course course = _courseRepository.GetCourse(courseId);
 
@@ -82,20 +67,50 @@ namespace WebAPITask.Services
             course.Discipline = discipline;
             course.Difficulty = difficulty;
             course.UpdatedAt = DateTime.Now;
-
-            return HttpStatusCode.OK;
         }
 
         public void EnrollUser(int courseId, int userId)
         {
-            Course course = _courseRepository.GetCourse(courseId);
-            course.Enrollments.Add(userId);
+            _courseRepository.GetCourse(courseId).Enrollments.Add(userId);
         }
 
         public void EnrollContributor(int courseId, int contributorId)
         {
-            Course course = _courseRepository.GetCourse(courseId);
-            course.Contributors.Add(contributorId);
+            _courseRepository.GetCourse(courseId).Contributors.Add(contributorId);
+        }
+
+        public void AddModuleToCourse(Course course, Module module)
+        {
+            if (module.Order < course.Modules.Count())
+            {
+                course.Modules.Insert(module.Order - 1, module /*new Tuple<int, string>(module.Id, module.Title)*/);
+            }
+            else
+            {
+                course.Modules.Insert(course.Modules.Count() - 1, module /*new Tuple<int, string>(module.Id, module.Title)*/);
+            }
+
+        }
+        public void AddModuleToCourse(int courseId, Module module)
+        {
+            var course = _courseRepository.GetCourse(courseId);
+
+            if (module.Order - 1 < course.Modules.Count())
+            {
+                course.Modules.Insert(module.Order - 1, module /*new Tuple<int, string>(module.Id, module.Title)*/);
+            }
+            else
+            {
+                course.Modules.Insert(course.Modules.Count(), module /* new Tuple<int, string>(module.Id, module.Title)*/);
+            }
+        }
+
+        public void RemoveModuleFromCourse(int moduleId)
+        {
+            var course = _courseRepository.GetCourses()
+                .Where(c => c.Modules.Where(m => m.Id == moduleId) != null).FirstOrDefault();
+
+            course.Modules.Remove(course.Modules.Where(m => m.Id == moduleId).FirstOrDefault());
         }
     }
 }

@@ -2,6 +2,7 @@
 using WebAPITask.Models;
 using WebAPITask.DataAccess;
 using WebAPITask.Services;
+//using MediatR;
 
 namespace WebAPITask.Controllers
 {
@@ -11,36 +12,29 @@ namespace WebAPITask.Controllers
     {
         private readonly ICourseRepository _courseRepository;
         private readonly ICourseService _courseService;
+        private readonly IModuleService _moduleService;
+        //private readonly IMediator _mediator;
 
-        public CourseController(ICourseRepository courseRepository, 
-            ICourseService courseService)
+        public CourseController(/*IMediator mediator,*/ ICourseRepository courseRepository,
+            ICourseService courseService, IModuleService moduleService)
         {
+            // _mediator = mediator;
             _courseRepository = courseRepository;
             _courseService = courseService;
-        }
+            _moduleService = moduleService; 
+        } 
 
         [HttpPost("CreateCourse")]
         public IActionResult CreateCourse(string title)
         {
-            var result = _courseService.CreateCourse(title, 1);
-            return StatusCode((int)result);
+            _courseService.CreateCourse(title, 1);
+            return Ok("Course was successfully created");
         }
 
         [HttpGet("GetCourse")]
         public Object GetCourse(int Id)
         {
-            Course course = _courseRepository.GetCourse(Id);
-
-            List<Object> list = new List<Object>();
-            foreach (var module in course.Modules) 
-            {
-                list.Add(new { module.Id, module.Title});
-            }
-
-            var output = new { course.Id, course.Title, course.CreatedBy, 
-                course.CreatedAt, course.UpdatedAt, list };
-
-            return output;
+            return _courseRepository.GetCourseLimitedData(Id);
         }
 
         [HttpDelete("DeleteCourse")]
@@ -50,6 +44,7 @@ namespace WebAPITask.Controllers
 
             if (course.CreatedBy == userId)
             {
+                _moduleService.DeleteModules(course.Modules);
                 _courseService.DeleteCourse(courseId);
                 return Ok("Course was successfuly deleted");
             }
@@ -60,16 +55,16 @@ namespace WebAPITask.Controllers
         }
 
         [HttpPatch("UpdateCourse")]
-        public IActionResult UpdateCourse(int userId, int courseId, string title, 
-            string description, Discipline discipline, Difficulty difficulty)
+        public IActionResult UpdateCourse([FromBody] UpdateCourseRequestData data)
         {
-            Course course = _courseRepository.GetCourse(courseId);
+            Course course = _courseRepository.GetCourse(data.courseId);
 
-            if (course.CreatedBy == userId)
+            if (course.CreatedBy == data.userId)
             {
-                var result = _courseService.UpdateCourse(courseId, title, 
-                    description, discipline, difficulty);
-                return StatusCode((int)result/*, result*/);
+                _courseService.UpdateCourse(data.courseId,
+                    data.title, data.description, data.discipline, data.difficulty);
+
+                return Ok();
             }
             else
             {
